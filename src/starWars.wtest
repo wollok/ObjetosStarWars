@@ -1,0 +1,83 @@
+import starWars.*
+
+describe "star wars episodio nuevo" {
+	
+	const tatooine = new Planeta(poblacion = 1000000,defensores = [hanSolo,arturito])
+    const leia = new Lider(amigo = hanSolo)
+    const otroLider = new Lider(amigo = arturito)
+    const otroLiderMas = new Lider(amigo = hanSolo)
+     
+	const muerteAmada = new Suceso(carga = -60)
+	const asesinarLuke = new Suceso(carga = 120)
+	const batalla = new Suceso(carga = -10)
+	const ganarCarrera = new Suceso(carga = 5)
+	const sucesoCompuesto1 = new SucesoCompuesto(
+		sucesos = [batalla,ganarCarrera])
+	const sucesoCompuesto2 = new SucesoCompuesto(
+		sucesos = [batalla,sucesoCompuesto1,muerteAmada])
+
+	const anakin = new Maestro(midiclorianos = 2000)
+
+
+test "Potencia inicial de arturito "{
+	assert.equals( 5, arturito.potencia())
+}
+test "Potencia de arturito con la bateria cargada"{
+	arturito.cargar()
+	assert.equals( 10, arturito.potencia())
+}
+
+test "Potencia Han Solo" {
+	assert.equals( 140, hanSolo.potencia())
+}
+
+test "Potencia Han Solo con arma alternativa" {
+	hanSolo.arma(armaAlternativa)
+	assert.equals( 2 * 80, hanSolo.potencia())
+}
+
+test "Potencia Han Solo congelado" {
+	hanSolo.congelar()
+	assert.equals( 0, hanSolo.potencia())
+}
+
+test "Invasion a tatooine disminuye poblacion" {
+	tatooine.invasion(200)
+	assert.equals( 900000, tatooine.poblacion())
+}
+
+test "Invasion a tatooine mejor defendido no disminuye poblacion" {
+	const poblacion = tatooine.poblacion()
+	tatooine.agregarDefensor(leia)
+	tatooine.invasion(200)
+	assert.equals( poblacion, tatooine.poblacion())
+}
+
+test "El defensor mas poderoso" {
+	tatooine.agregarDefensor(anakin)
+	assert.equals( anakin, tatooine.masPoderoso())
+}
+
+test "Anakin pasa al lado Oscuro" {
+	anakin.vivir(muerteAmada)
+	assert.equals(oscuro,anakin.lado())
+}
+
+test "Vader pasa al lado Luminoso" {
+	anakin.vivir(muerteAmada)
+	const vader = anakin
+	vader.vivir(asesinarLuke)
+	assert.equals(luminoso,vader.lado())
+}
+test "Anakin vive una batalla y no cambia de lado" {
+	const lado = anakin.lado()
+	anakin.vivir(batalla)
+	assert.equals(lado,anakin.lado())
+}
+test "Anakin vive un suceso Compuesto y no cambia de lado" {
+	const lado = anakin.lado()
+	anakin.vivir(sucesoCompuesto1)
+	assert.equals(lado,anakin.lado())
+}
+
+}

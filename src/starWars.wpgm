@@ -1,0 +1,21 @@
+import starWars.*
+
+program pelicula {
+
+	console.println('En una galaxia muy lejana')
+
+
+	const tatooine = new Planeta(poblacion = 1000000,defensores = [hanSolo,arturito])
+	
+//	anakin.vivir(ganarCarrera)
+	hanSolo.congelar()
+	tatooine.invasion(200)
+	console.println('Se invade tatooine, quedan ' + tatooine.poblacion() + ' habitantes'  )
+
+//	[muerteAmada,batalla,sucesoCompuesto,asesinarLuke].
+//		forEach{s=> anakin.vivir(s)}
+//	
+//	console.println('Anakin ' + anakin.lado().descripcion())
+//		
+
+}
